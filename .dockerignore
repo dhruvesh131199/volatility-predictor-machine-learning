@@ -1,10 +1,25 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
 .venv/
 venv/
-env/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-.pytest_cache/
+
+# Ignore frontend development files
+frontend/node_modules
+frontend/.vite
+frontend/.env
+frontend/.env.local
+frontend/.DS_Store
+frontend/dist  # optional; final dist is used in Docker multi-stage
+
+# General
+.DS_Store
+.git
+.gitignore
 *.log
+*.db
+*.sqlite
+*.zip
+*.tar.gz
+*.ipynb

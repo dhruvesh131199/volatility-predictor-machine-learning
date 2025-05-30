@@ -4,6 +4,7 @@ import joblib
 import pandas as pd
 from app.predict import make_prediction
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -14,6 +15,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# This serves React's index.html and static assets
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 @app.get("/")
 def home():
