@@ -1,0 +1,17 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+.venv/
+venv/
+
+# General
+.DS_Store
+.git
+.gitignore
+*.log
+*.db
+*.sqlite
+*.zip
+*.tar.gz
+*.ipynb

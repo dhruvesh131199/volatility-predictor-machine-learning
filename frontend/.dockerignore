@@ -1,0 +1,18 @@
+# Ignore frontend development files
+node_modules
+.vite
+.env
+.env.local
+.DS_Store
+dist  # optional; final dist is used in Docker multi-stage
+
+# General
+.DS_Store
+.git
+.gitignore
+*.log
+*.db
+*.sqlite
+*.zip
+*.tar.gz
+*.ipynb

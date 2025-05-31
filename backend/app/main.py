@@ -4,24 +4,20 @@ import joblib
 import pandas as pd
 from app.predict import make_prediction
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all for development
-    allow_credentials=True,
+    allow_origins=["http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# This serves React's index.html and static assets
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
 @app.get("/")
-def home():
-    return {"message": "Volatility prediction API is running"}
+def serve_react_index():
+    #return FileResponse(os.path.join("static", "index.html"))
+    return "Hello Hello"
 
 @app.post("/predict")
 def predict(data: InputFeatures):

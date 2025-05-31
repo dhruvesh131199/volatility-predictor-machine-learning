@@ -1,5 +1,31 @@
-# .gitignore
-venv/
-__pycache__/
-*.pyc
-.env
+# Root-level
+
+# Node modules (frontend)
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/.env*
+frontend/.DS_Store
+
+# Python stuff (backend)
+backend/__pycache__/
+backend/*.py[cod]
+backend/env/
+backend/venv/
+backend/.env
+backend/.pytest_cache/
+backend/.DS_Store
+
+# Docker
+**/node_modules/
+**/__pycache__/
+**/.env
+**/.DS_Store
+
+# Logs
+*.log
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp

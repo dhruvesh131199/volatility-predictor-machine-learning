@@ -40,7 +40,7 @@ function App() {
         payload[key] = parseFloat(input[key]); // Convert to number
       }
 
-      const res = await fetch('https://volatility-predictor.onrender.com/predict', {
+      const res = await fetch('http://localhost:8002/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
