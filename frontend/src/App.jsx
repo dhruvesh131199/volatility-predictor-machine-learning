@@ -1,24 +1,25 @@
 import { useState } from 'react';
+import FetchPredictXgBoost from './FetchPredictXgBoost';
 
 function App() {
   // ✅ Initialize state with all features
   const [input, setInput] = useState({
-    Volume: '0',
-    Volume_Lag1: '0',
-    Volume_Lag2: '0',
-    Volume_Lag3: '0',
-    Volume_Ratio: '0',
-    Volume_Ratio_Lag1: '0',
-    Volume_Ratio_Lag2: '0',
-    Volume_Ratio_Lag3: '0',
-    High_Low_Ratio: '0',
-    High_Low_Ratio_Lag1: '0',
-    High_Low_Ratio_Lag2: '0',
-    High_Low_Ratio_Lag3: '0',
+    volume: '0',
+    volume_lag1: '0',
+    volume_lag2: '0',
+    volume_lag3: '0',
+    volume_ratio: '0',
+    volume_ratio_lag1: '0',
+    volume_ratio_lag2: '0',
+    volume_ratio_lag3: '0',
+    high_low_ratio: '0',
+    high_low_ratio_lag1: '0',
+    high_low_ratio_lag2: '0',
+    high_low_ratio_lag3: '0',
     cur_weekly_vol: '0',
-    weekly_vol_Lag1: '0',
-    weekly_vol_Lag2: '0',
-    weekly_vol_Lag3: '0',
+    weekly_vol_lag1: '0',
+    weekly_vol_lag2: '100',
+    weekly_vol_lag3: '100'
   });
 
   const [result, setResult] = useState(null);
@@ -59,6 +60,13 @@ function App() {
     <div style={{ padding: '2rem', fontFamily: 'Arial', maxWidth: '600px', margin: '0 auto' }}>
       <h2>📈 Stock Volatility Predictor</h2>
 
+      <div>
+        <h3>Analyze with automated data</h3>
+        <FetchPredictXgBoost />
+      </div>
+
+      <h3>Manually Predict with form</h3>
+
       <form onSubmit={handleSubmit}>
         {Object.keys(input).map((key) => (
           <div key={key} style={{ marginBottom: '1rem' }}>
@@ -86,6 +94,8 @@ function App() {
         </p>
       )}
     </div>
+
+
   );
 }
 

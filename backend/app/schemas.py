@@ -1,19 +1,19 @@
 from pydantic import BaseModel
 
 class InputFeatures(BaseModel):
-    Volume: int
-    Volume_Lag1: float
-    Volume_Lag2: float
-    Volume_Lag3: float
-    Volume_Ratio: float
-    Volume_Ratio_Lag1: float
-    Volume_Ratio_Lag2: float
-    Volume_Ratio_Lag3: float
-    High_Low_Ratio: float
-    High_Low_Ratio_Lag1: float
-    High_Low_Ratio_Lag2: float
-    High_Low_Ratio_Lag3: float
+    volume: int
+    volume_lag1: float
+    volume_lag2: float
+    volume_lag3: float
+    volume_ratio: float
+    volume_ratio_lag1: float
+    volume_ratio_lag2: float
+    volume_ratio_lag3: float
+    high_low_ratio: float
+    high_low_ratio_lag1: float
+    high_low_ratio_lag2: float
+    high_low_ratio_lag3: float
     cur_weekly_vol: float
-    weekly_vol_Lag1: float
-    weekly_vol_Lag2: float
-    weekly_vol_Lag3: float
+    weekly_vol_lag1: float
+    weekly_vol_lag2: float
+    weekly_vol_lag3: float

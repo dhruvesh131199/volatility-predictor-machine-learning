@@ -12,11 +12,10 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     ports:
-      - "5173:5173"
+      - "3000:80"
+    # Uncomment this if you want live reload during development instead:
     volumes:
-      - ./frontend:/app          # Mount local source to container
-      - /app/node_modules        # Prevent overwriting node_modules from host
-    command: npm run dev -- --host
-
+      - ./frontend:/app
+    command: npm run dev
