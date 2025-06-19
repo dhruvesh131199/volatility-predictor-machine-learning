@@ -1,3 +1,5 @@
+/*https://volatility-predictor-api.onrender.com*/
+
 import { useState } from 'react';
 import FetchPredictXgBoost from './FetchPredictXgBoost';
 
@@ -57,13 +59,14 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial', maxWidth: '600px', margin: '0 auto' }}>
-      <h2>📈 Stock Volatility Predictor</h2>
+    <div style={{ padding: '2rem', fontFamily: 'Arial', margin: '0 auto' }}>
+      <h2>📈 Reliance's next week volatility</h2>
 
-      <div>
-        <h3>Analyze with automated data</h3>
+      <div >
         <FetchPredictXgBoost />
       </div>
+
+      <div style={{ maxWidth: '600px', margin: '1rem 0' }}>
 
       <h3>Manually Predict with form</h3>
 
@@ -86,12 +89,18 @@ function App() {
           Predict
         </button>
       </form>
+      </div>
 
       {loading && <p>Loading...</p>}
       {result !== null && !loading && (
-        <p style={{ marginTop: '1rem' }}>
-          📊 <strong>Predicted Volatility:</strong> {result}
+        <div className="prediction-box">
+        <h4 className="prediction-title">
+          Next week's volatility
+        </h4>
+        <p className="prediction-value">
+          Predicted Volatility: <span>{(result * 100).toFixed(5)}%</span>
         </p>
+      </div>
       )}
     </div>
 

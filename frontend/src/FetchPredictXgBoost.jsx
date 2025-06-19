@@ -6,28 +6,53 @@ function DataTable({ data }) {
   const headers = Object.keys(data[0]);
 
   return (
-    <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: "1rem" }}>
-      <thead>
-        <tr>
-          {headers.map((key) => (
-            <th key={key} style={{ border: "1px solid #ccc", padding: "8px", background: "#f0f0f0" }}>
-              {key}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, idx) => (
-          <tr key={idx}>
+    <div style={{ overflowX: 'auto', width: '100%' }}>
+      <table
+        style={{
+          borderCollapse: 'collapse',
+          marginBottom: '1rem',
+        }}
+      >
+        <thead>
+          <tr>
             {headers.map((key) => (
-              <td key={key} style={{ border: "1px solid #ddd", padding: "8px" }}>
-                {row[key] === null ? "—" : typeof row[key] === "number" ? row[key].toFixed(4) : row[key]}
-              </td>
+              <th
+                key={key}
+                style={{
+                  border: '1px solid #ccc',
+                  padding: '8px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {key}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((row, idx) => (
+            <tr key={idx}>
+              {headers.map((key) => (
+                <td
+                  key={key}
+                  style={{
+                    border: '1px solid #ddd',
+                    padding: '8px',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {row[key] === null
+                    ? '—'
+                    : typeof row[key] === 'number'
+                    ? row[key].toFixed(4)
+                    : row[key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -38,6 +63,7 @@ function FetchPredictXgBoost() {
   const [processedData, setProcessedData] = useState(null);
   const [predictedVolatility, setPredictedVolatility] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [showDelayMessage, setShowDelayMessage] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
@@ -45,6 +71,9 @@ function FetchPredictXgBoost() {
     setPredictedVolatility(null);
     setRawData(null);
     setProcessedData(null);
+
+    const delayTimer = setTimeout(() => {
+      setShowDelayMessage(true);}, 5000);
 
     try {
       // STEP 1 — fetch raw data
@@ -79,21 +108,26 @@ function FetchPredictXgBoost() {
       console.error("Parsing error:",error);
     } finally {
       setLoading(false);
+      clearTimeout(delayTimer);
+      setShowDelayMessage(false);
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Analyze Stock Volatility</h2>
+    <div style={{ padding: "1rem" }}>
+      <h2>Predict With Latest Data</h2>
 
       <button disabled={loading} onClick={handleClick}>
-        {loading ? "Processing…" : "Analyze"}
+        {loading ? "Processing…" : "Fetch Data & Predict"}
       </button>
 
       {/* STEP 1 — Display raw data*/}
       {currentStep >= 1 && rawData && (
         <div style={{ marginBottom: "1rem" }}>
-          <h4>Step 1 — Fetched raw data</h4>
+          <h4>Fetched raw data</h4>
+          <p>Daily data is fetched from Yahoo finance, and derived weekly parameters<br/ >
+          <strong>Volume</strong>: Sum of volume for the week<br/ >
+          <strong>cur_weekly_vol</strong>: Standard deviation of each day's volatility</p>
           <DataTable data={rawData} />
         </div>
       )}
@@ -101,23 +135,32 @@ function FetchPredictXgBoost() {
       {/* STEP 2 — Display processed data*/}
       {currentStep >= 3 && processedData && (
         <div style={{ marginBottom: "1rem" }}>
-          <h4>Step 2 — Processed data</h4>
+          <h4>Processed data</h4>
+          <p>Input features to feed XgBoost model. Refer to the Jupyter notebook for more detail.</p>
           <DataTable data={processedData} />
         </div>
       )}
 
       {/* STEP 4 — Display predicted volatility*/}
-      {currentStep == 4 && predictedVolatility !== null && (
-        <div style={{ marginBottom: "1rem" }}>
-          <h4>Step 4 — Model's predicted volatility</h4>
-          <p>Predicted Volatility: {(predictedVolatility*100).toFixed(5)}%</p>
-        </div>
-      )}
+      {currentStep === 4 && predictedVolatility !== null && (
+      <div className="prediction-box">
+        <h4 className="prediction-title">
+          Prediction for Next Week's Volatility
+        </h4>
+        <p className="prediction-value">
+          Predicted Volatility: <span>{(predictedVolatility * 100).toFixed(5)}%</span>
+        </p>
+      </div>
+)}
 
       {/* Loading indicator or progress*/}
       {loading && <p>Processing...</p>}
 
-      {/* An optional small animation or progress bar can be placed here*/}
+      {loading && showDelayMessage && (
+        <p style={{marginTop: '0.5rem', fontStyle: 'italic' }}>
+        It takes some time to load for the first time, please wait...
+        </p>
+      )}
     </div>
   );
 }
