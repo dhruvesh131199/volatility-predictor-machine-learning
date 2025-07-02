@@ -158,7 +158,7 @@ function FetchPredictXgBoost() {
 
       {loading && showDelayMessage && (
         <p style={{marginTop: '0.5rem', fontStyle: 'italic' }}>
-        It takes some time to load for the first time, please wait...
+        It may take some time to load the first time due to using the free version on render. Please wait...
         </p>
       )}
     </div>
